@@ -17,7 +17,7 @@ services:
     volumes:
       - mongo-db:/data/db
     ports:
-      - "27017:27017"
+      - "2717:27017"
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
