@@ -13,6 +13,7 @@ services:
 
   mongo:
     image: mongo
+    container_name: mongo
     restart: always
     volumes:
       - mongo-db:/data/db
@@ -24,6 +25,7 @@ services:
 
   mongo-express:
     image: mongo-express
+    container_name: mongo-express
     restart: always
     ports:
       - 8081:8081
