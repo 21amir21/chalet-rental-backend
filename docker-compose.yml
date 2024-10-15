@@ -10,6 +10,8 @@ services:
       - "5000:5000"
     env_file:
       - .env
+    depends_on:
+      - mongo
 
   mongo:
     image: mongo
@@ -36,6 +38,8 @@ services:
       ME_CONFIG_BASICAUTH: true
       ME_CONFIG_BASICAUTH_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
       ME_CONFIG_BASICAUTH_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+    depends_on:
+      - mongo
 
 volumes:
   mongo-db:
