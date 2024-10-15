@@ -12,7 +12,7 @@ EXPOSE 5000
 
 CMD [ "npm", "run", "dev" ]
 
-#####################################
+# --------- Multi-Stage Dockerfile ----------
 
 FROM node:18 as production
 
