@@ -47,6 +47,19 @@ class UserService {
       throw err;
     }
   }
+
+  static async updateUser(userId, updatedUserData) {
+    try {
+      const user = await User.findByIdAndUpdate(userId, updatedUserData);
+      if (!user) {
+        throw new Error("User not found");
+      }
+      return user;
+    } catch (err) {
+      console.error(`Error updating user: ${err}`);
+      throw err;
+    }
+  }
 }
 
 module.exports = UserService;

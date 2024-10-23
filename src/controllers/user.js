@@ -47,6 +47,17 @@ class UserController {
       res.status(500).json({ message: "Internal server error" });
     }
   }
+
+  static async updateUser(req, res) {
+    try {
+      const userId = req.params.id;
+      const updatedUser = req.body;
+      const user = await UserService.updateUser(userId, updatedUser);
+      res.status(200).json({
+        message: `Successfully updated user of id ${user._id}`,
+      });
+    } catch (err) {}
+  }
 }
 
 module.exports = UserController;
