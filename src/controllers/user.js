@@ -21,6 +21,19 @@ class UserController {
       res.status(500).json({ message: "Internal server error" });
     }
   }
+
+  static async createUser(req, res) {
+    try {
+      const userData = req.body;
+      const user = await UserService.createUser(userData);
+      res.status(201).json({
+        message: `User with id: ${user._id} created successfully!`,
+      });
+    } catch (err) {
+      console.error(`Error creating user in controller: ${err}`);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  }
 }
 
 module.exports = UserController;

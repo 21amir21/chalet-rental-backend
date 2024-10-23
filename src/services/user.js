@@ -20,6 +20,17 @@ class UserService {
       throw err;
     }
   }
+
+  static async createUser(userData) {
+    try {
+      const user = new User(userData);
+      await user.save();
+      return user;
+    } catch (err) {
+      console.error(`Error creating user: ${err}`);
+      throw err; // Throw the error so it can be handled by the caller
+    }
+  }
 }
 
 module.exports = UserService;
