@@ -56,7 +56,10 @@ class UserController {
       res.status(200).json({
         message: `Successfully updated user of id ${user._id}`,
       });
-    } catch (err) {}
+    } catch (err) {
+      console.error(`Error updating user in controller: ${err}`);
+      res.status(500).json({ message: "Internal server error" });
+    }
   }
 }
 
