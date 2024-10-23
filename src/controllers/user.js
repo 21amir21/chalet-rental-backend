@@ -27,10 +27,23 @@ class UserController {
       const userData = req.body;
       const user = await UserService.createUser(userData);
       res.status(201).json({
-        message: `User with id: ${user._id} created successfully!`,
+        message: `User was created successfully!`,
       });
     } catch (err) {
       console.error(`Error creating user in controller: ${err}`);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  }
+
+  static async deleteUser(req, res) {
+    try {
+      const userId = req.params.id;
+      const user = await UserService.deleteUser(userId);
+      res.status(200).json({
+        message: `Successfully deleted user of id ${user._id} and name ${user.name}`,
+      });
+    } catch (err) {
+      console.error(`Error deleting user in controller: ${err}`);
       res.status(500).json({ message: "Internal server error" });
     }
   }

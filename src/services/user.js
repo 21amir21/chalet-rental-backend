@@ -14,9 +14,12 @@ class UserService {
   static async getUserById(userId) {
     try {
       const user = await User.findById(userId);
+      if (!user) {
+        throw new Error("User not found");
+      }
       return user;
     } catch (err) {
-      console.error(`Error getting user by id: ${err}`);
+      console.error(`Error getting user by its id: ${err}`);
       throw err;
     }
   }
@@ -29,6 +32,19 @@ class UserService {
     } catch (err) {
       console.error(`Error creating user: ${err}`);
       throw err; // Throw the error so it can be handled by the caller
+    }
+  }
+
+  static async deleteUser(userId) {
+    try {
+      const user = await User.findByIdAndDelete(userId);
+      if (!user) {
+        throw new Error("User not found");
+      }
+      return user;
+    } catch (err) {
+      console.error(`Error deleting user: ${err}`);
+      throw err;
     }
   }
 }
