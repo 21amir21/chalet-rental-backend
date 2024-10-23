@@ -7,7 +7,7 @@ class UserController {
       res.status(200).json(users);
     } catch (err) {
       console.error(`Error getting users in controller: ${err}`);
-      res.status(500).json({ message: "Internal server error" });
+      res.status(500).json({ error: "Internal server error" });
     }
   }
 
@@ -18,7 +18,7 @@ class UserController {
       res.status(200).json(user);
     } catch (err) {
       console.error(`Error getting user by id in controller: ${err}`);
-      res.status(500).json({ message: "Internal server error" });
+      res.status(500).json({ error: "Internal server error" });
     }
   }
 
@@ -31,7 +31,7 @@ class UserController {
       });
     } catch (err) {
       console.error(`Error creating user in controller: ${err}`);
-      res.status(500).json({ message: "Internal server error" });
+      res.status(500).json({ error: "Internal server error" });
     }
   }
 
@@ -44,7 +44,7 @@ class UserController {
       });
     } catch (err) {
       console.error(`Error deleting user in controller: ${err}`);
-      res.status(500).json({ message: "Internal server error" });
+      res.status(500).json({ error: "Internal server error" });
     }
   }
 
@@ -58,7 +58,7 @@ class UserController {
       });
     } catch (err) {
       console.error(`Error updating user in controller: ${err}`);
-      res.status(500).json({ message: "Internal server error" });
+      res.status(500).json({ error: "Internal server error" });
     }
   }
 }
