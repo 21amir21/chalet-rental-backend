@@ -6,7 +6,6 @@ class UserService {
       const users = await User.find({});
       return users;
     } catch (err) {
-      console.error(`Error getting users: ${err}`);
       throw err;
     }
   }
@@ -19,7 +18,6 @@ class UserService {
       }
       return user;
     } catch (err) {
-      console.error(`Error getting user by its id: ${err}`);
       throw err;
     }
   }
@@ -30,7 +28,6 @@ class UserService {
       await user.save();
       return user;
     } catch (err) {
-      console.error(`Error creating user: ${err}`);
       throw err; // Throw the error so it can be handled by the caller
     }
   }
@@ -43,7 +40,6 @@ class UserService {
       }
       return user;
     } catch (err) {
-      console.error(`Error deleting user: ${err}`);
       throw err;
     }
   }
@@ -56,7 +52,6 @@ class UserService {
       }
       return user;
     } catch (err) {
-      console.error(`Error updating user: ${err}`);
       throw err;
     }
   }
