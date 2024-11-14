@@ -1,14 +1,14 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
-const connectDB = require("./config/db");
+const initDB = require("./config/db");
 const userRouter = require("./routes/user");
 
 // Load environment variables
 dotenv.config();
 
 // Connect to MongoDB
-connectDB();
+initDB();
 
 // Initialize app
 const app = express();
