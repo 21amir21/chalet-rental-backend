@@ -61,6 +61,14 @@ class UserController {
       res.status(500).json({ error: "Internal server error" });
     }
   }
+
+  // TODO: you need to decide if the authentication is gonna be
+  // part of the user or a whole service ?
+  static async login(req, res) {
+    const { email, password } = req.body;
+
+    // COMPLETE HERE
+  }
 }
 
 module.exports = UserController;

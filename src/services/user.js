@@ -1,5 +1,7 @@
 const User = require("../models/User");
 
+const bcrypt = require("bcrypt");
+
 class UserService {
   static async getUsers() {
     try {
@@ -24,7 +26,13 @@ class UserService {
 
   static async createUser(userData) {
     try {
-      const user = new User(userData);
+      const hashedPassword = await bcrypt.hash(userData.password, 14);
+
+      const user = new User({
+        ...userData,
+        password: hashedPassword,
+      });
+
       await user.save();
       return user;
     } catch (err) {
@@ -55,6 +63,8 @@ class UserService {
       throw err;
     }
   }
+
+  static async login(email, password) {}
 }
 
 module.exports = UserService;
