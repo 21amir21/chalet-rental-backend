@@ -6,7 +6,7 @@ class UserController {
       const users = await UserService.getUsers();
       res.status(200).json(users);
     } catch (err) {
-      console.error(`Error getting users in controller: ${err}`);
+      console.error(`Error getting users: ${err}`);
       res.status(500).json({ error: "Internal server error" });
     }
   }
@@ -17,7 +17,7 @@ class UserController {
       const user = await UserService.getUserById(userId);
       res.status(200).json(user);
     } catch (err) {
-      console.error(`Error getting user by id in controller: ${err}`);
+      console.error(`Error getting user by id: ${err}`);
       res.status(500).json({ error: "Internal server error" });
     }
   }
@@ -30,7 +30,7 @@ class UserController {
         message: `User was created successfully!`,
       });
     } catch (err) {
-      console.error(`Error creating user in controller: ${err}`);
+      console.error(`Error creating user: ${err}`);
       res.status(500).json({ error: "Internal server error" });
     }
   }
@@ -43,7 +43,7 @@ class UserController {
         message: `Successfully deleted user of id ${user._id} and name ${user.name}`,
       });
     } catch (err) {
-      console.error(`Error deleting user in controller: ${err}`);
+      console.error(`Error deleting user: ${err}`);
       res.status(500).json({ error: "Internal server error" });
     }
   }
@@ -57,7 +57,7 @@ class UserController {
         message: `Successfully updated user of id ${user._id}`,
       });
     } catch (err) {
-      console.error(`Error updating user in controller: ${err}`);
+      console.error(`Error updating user ${user._id}: ${err}`);
       res.status(500).json({ error: "Internal server error" });
     }
   }
