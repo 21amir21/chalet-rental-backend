@@ -1,14 +1,22 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
-const initDB = require("./config/db");
+const { initDB } = require("./config/db");
 const userRouter = require("./routes/user");
 
 // Load environment variables
 dotenv.config();
 
 // Connect to MongoDB
-await initDB();
+(async () => {
+  try {
+    await initDB();
+    console.log("MongoDB connected successfully!");
+  } catch (err) {
+    console.error(`Error: ${err}`);
+    process.exit(1);
+  }
+})();
 
 // Initialize app
 const app = express();
