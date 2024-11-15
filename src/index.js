@@ -8,7 +8,7 @@ const userRouter = require("./routes/user");
 dotenv.config();
 
 // Connect to MongoDB
-initDB();
+await initDB();
 
 // Initialize app
 const app = express();
