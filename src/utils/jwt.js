@@ -24,6 +24,6 @@ module.exports.generateToken = (user) => {
 // function to verify that user has a token, and then it
 // returns the user ID
 module.exports.verifyToken = (token) => {
-  const decoded = jwt.verify(token, process.env.JWT_SECRET).userId;
+  const decoded = jwt.verify(token, process.env.JWT_SECRET);
   return decoded.userId;
 };
