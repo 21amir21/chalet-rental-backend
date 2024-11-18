@@ -8,15 +8,14 @@ const userRouter = require("./routes/user");
 dotenv.config();
 
 // Connect to MongoDB
-(async () => {
-  try {
-    await initDB();
+initDB()
+  .then(() => {
     console.log("MongoDB connected successfully!");
-  } catch (err) {
-    console.error(`Error: ${err}`);
+  })
+  .catch((err) => {
+    console.error(err);
     process.exit(1);
-  }
-})();
+  });
 
 // Initialize app
 const app = express();
