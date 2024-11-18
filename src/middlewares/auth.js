@@ -4,6 +4,12 @@ const { verifyToken } = require("../utils/jwt");
 // users accessing this route are authenticated
 const authenticate = () => {
   return (req, res, next) => {
+    const authHeader = req.headers.authorization;
+
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return res.status(401).json({ message: "Not Authorized" });
+    }
+
     // to get the token
     // Bearer {TOKEN_IS_HERE}
     const token = req.headers.authorization.split(" ")[1];
