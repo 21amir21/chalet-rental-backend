@@ -1,4 +1,5 @@
 const UserService = require("../services/user");
+const { generateToken } = require("../utils/jwt");
 
 class UserController {
   static async getUsers(req, res) {
@@ -22,7 +23,7 @@ class UserController {
     }
   }
 
-  static async createUser(req, res) {
+  static async registerUser(req, res) {
     try {
       const userData = req.body;
       const user = await UserService.createUser(userData);
@@ -62,12 +63,26 @@ class UserController {
     }
   }
 
-  // TODO: you need to decide if the authentication is gonna be
-  // part of the user or a whole service ?
   static async login(req, res) {
-    const { email, password } = req.body;
-
-    // COMPLETE HERE
+    try {
+      const { email, password } = req.body;
+      const user = await UserService.checkCredentials(email, password);
+      if (user) {
+        const token = generateToken(user);
+        res.status(200).json({
+          message: "Login Successfull!",
+          jwt: token,
+          userId: user._id,
+          userType: user.userType,
+        });
+      } else {
+        res.status(401).json({ messsage: "Invalid Credentials" });
+      }
+    } catch (err) {
+      res.status(500).json({
+        error: err.message,
+      });
+    }
   }
 }
 

@@ -3,6 +3,9 @@ const User = require("../models/User");
 const bcrypt = require("bcrypt");
 
 class UserService {
+  // TODO Might be deleted!
+  // or actually no, because admins can get all the users
+  // if we wanna make it that way
   static async getUsers() {
     try {
       const users = await User.find({});
@@ -64,7 +67,23 @@ class UserService {
     }
   }
 
-  static async login(email, password) {}
+  static async doesUserExist(email) {
+    const user = await User.findOne({ email: email });
+    return user ? true : false;
+  }
+
+  static async checkCredentials(email, password) {
+    try {
+      const user = await User.findOne({ email: email });
+
+      if (user) {
+        const isCorrectPassword = await bcrypt.compare(password, user.password);
+        return isCorrectPassword ? user : null;
+      }
+    } catch (err) {
+      throw new Error("Wrong password or Email");
+    }
+  }
 }
 
 module.exports = UserService;
