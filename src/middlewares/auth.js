@@ -20,8 +20,11 @@ const authenticate = () => {
 
     try {
       // verifyToken verifies the token
-      // and returns the user id
-      req.userId = verifyToken(token);
+      // and returns decoded payload of the JWT
+      const decoded = verifyToken(token);
+
+      req.userId = decoded.userId;
+      req.userType = decoded.userType;
       next();
     } catch (err) {
       return res.status(401).json({ message: "Not Authorized", error: err });
@@ -29,4 +32,15 @@ const authenticate = () => {
   };
 };
 
-module.exports = authenticate;
+const authorize = (roles) => {
+  return (req, res, next) => {
+    if (!roles.includes(req.userType)) {
+      return res.status(403).json({
+        message: "Forbidden: You do not have access to this resource",
+      });
+    }
+    next();
+  };
+};
+
+module.exports = { authenticate, authorize };
