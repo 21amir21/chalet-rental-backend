@@ -1,4 +1,5 @@
 const { verifyToken } = require("../utils/jwt");
+const Chalet = require("../models/Chalet");
 
 // authenticate is a simple middleware to make sure that
 // users accessing this route are authenticated
@@ -43,4 +44,27 @@ const authorize = (roles) => {
   };
 };
 
-module.exports = { authenticate, authorize };
+const checkOwnership = () => {
+  return async (req, res, next) => {
+    try {
+      const chaletId = req.params.id; // Extract chalet ID from the route parameter
+      const chalet = await Chalet.findById(chaletId);
+
+      if (!chalet) {
+        return res.status(404).json({ error: "Chalet not found" });
+      }
+
+      if (chalet.owner.toString() !== req.userId) {
+        return res
+          .status(403)
+          .json({ error: "Forbidden: You do not own this chalet" });
+      }
+
+      next(); // Ownership confirmed, proceed to the next middleware or route handler
+    } catch (err) {
+      res.status(500).json({ error: "Internal server error" });
+    }
+  };
+};
+
+module.exports = { authenticate, authorize, checkOwnership };
