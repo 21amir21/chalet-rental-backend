@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const { initDB } = require("./config/db");
 const userRouter = require("./routes/user");
+const chaletRouter = require("./routes/chalet");
 
 // Load environment variables
 dotenv.config();
@@ -26,6 +27,7 @@ app.use(express.json());
 
 // Routes
 app.use("/users", userRouter);
+app.use("/chalets", chaletRouter);
 
 // Start the server
 const PORT = process.env.PORT || 5000;
