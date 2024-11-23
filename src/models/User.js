@@ -17,7 +17,7 @@ const userSchema = new Schema(
     },
     userType: {
       type: String,
-      enum: ["customer", "owner"],
+      enum: ["customer", "owner", "admin"],
       required: true,
     },
   },
