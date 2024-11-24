@@ -7,6 +7,21 @@ const router = Router();
 // simple example
 router.get("/", PaymentController.getPayments);
 router.get("/:id", PaymentController.getPaymentsById);
+router.post(
+    "/:id",
+    PaymentController.createPayment
+);
 
 // protected route
-router.delete("/:id", authorize(), PaymentController.deletePayment);
+router.delete(
+    "/:id",
+    authorize(["admin"]),
+    PaymentController.deletePayment
+);
+router.put(
+    "/:id",
+    authorize(["admin"]),
+    PaymentController.updatePayment
+);
+
+module.exports = router;
