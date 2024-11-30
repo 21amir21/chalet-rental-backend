@@ -24,6 +24,10 @@ const userSchema = new Schema(
       enum: ["customer", "owner", "admin"],
       required: true,
     },
+    profileImagePath: {
+      type: String,
+      default: "",
+    },
     wishList: {
       type: Array,
       default: [],

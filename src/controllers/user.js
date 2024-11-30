@@ -25,7 +25,16 @@ class UserController {
 
   static async registerUser(req, res) {
     try {
+      // extract the user data from the req body
       const userData = req.body;
+
+      // the uploaded file is in the req.file
+      const profileImage = req.file;
+      const profileImagePath = profileImage.path;
+
+      // add this profileImagePath to the userData object
+      userData.profileImagePath = profileImagePath;
+
       const user = await UserService.createUser(userData);
       res.status(201).json({
         message: `User was created successfully!`,

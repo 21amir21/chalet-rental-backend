@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const UserController = require("../controllers/user");
 const { authenticate } = require("../middlewares/auth");
+const upload = require("../utils/uploads");
 
 const router = Router();
 
@@ -12,7 +13,12 @@ router.get("/:id", UserController.getUserById);
 router.delete("/:id", authenticate(), UserController.deleteUser);
 router.put("/:id", authenticate(), UserController.updateUser);
 
-router.post("/signup", UserController.registerUser);
+// register a new user
+router.post(
+  "/signup",
+  upload.single("profileImage"),
+  UserController.registerUser
+);
 router.post("/login", UserController.login);
 
 module.exports = router;
