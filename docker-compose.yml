@@ -6,6 +6,7 @@ services:
     container_name: express-server
     volumes:
       - ./src:/app/src:ro
+      - ./src/public/uploads:/app/src/public/uploads:rw
     ports:
       - "5000:5000"
     env_file:
