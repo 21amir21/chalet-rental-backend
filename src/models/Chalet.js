@@ -25,7 +25,7 @@ const chaletSchema = new Schema(
     availability: { type: Boolean, default: true },
     description: { type: String },
     price: { type: Number, required: true },
-    images: [{ type: Schema.Types.Buffer }],
+    imagesPaths: [{ type: String }],
   },
   {
     timestamps: true,

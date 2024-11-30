@@ -2,7 +2,11 @@ const { Schema, model } = require("mongoose");
 
 const userSchema = new Schema(
   {
-    name: {
+    firstName: {
+      type: String,
+      required: true,
+    },
+    lastName: {
       type: String,
       required: true,
     },
@@ -19,6 +23,14 @@ const userSchema = new Schema(
       type: String,
       enum: ["customer", "owner", "admin"],
       required: true,
+    },
+    wishList: {
+      type: Array,
+      default: [],
+    },
+    reservationList: {
+      type: Array,
+      default: [],
     },
   },
   {
