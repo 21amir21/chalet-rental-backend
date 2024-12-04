@@ -5,6 +5,7 @@ const {
   authorize,
   checkOwnership,
 } = require("../middlewares/auth");
+const upload = require("../utils/uploads");
 
 const router = Router();
 
@@ -13,6 +14,7 @@ router.post(
   "/",
   authenticate(),
   authorize(["owner"]),
+  upload.array("listingPhotos"),
   ChaletController.createChalet
 );
 router.put(

@@ -41,10 +41,19 @@ class ChaletController {
 
   static async createChalet(req, res) {
     try {
+      // extracting the chalet data
       const chaletData = req.body;
+
+      // get all the photo paths of the uploaded chalets photos
+      const chaletPhotos = req.files;
+      const chaletPhotoPaths = chaletPhotos.map((file) => file.path);
+
+      // add these paths to the chalet data object
+      chaletData.chaletPhotoPaths = chaletPhotoPaths;
+
       const chalet = await ChaletService.postChalet(chaletData);
       res.status(201).json({
-        message: "Chalet was created successfully!",
+        message: "Chalet was created successfully!", // TODO: do i need to return the chalet in the response ?
       });
     } catch (err) {
       console.error(`Error creating chalet: ${err}`);
