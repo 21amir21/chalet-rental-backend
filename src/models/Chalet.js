@@ -2,30 +2,79 @@ const { Schema, model } = require("mongoose");
 
 const chaletSchema = new Schema(
   {
-    name: {
-      type: String,
-      required: true,
-    },
-    location: {
-      type: String,
-      required: true,
-    },
-    owner: {
-      type: Schema.Types.ObjectId,
+    creator: {
+      type: mongoose.Schema.Types.ObjectId,
       ref: "User",
+    },
+    category: {
+      type: String,
       required: true,
     },
-    customers: [{ type: Schema.Types.ObjectId, ref: "User" }],
-    tags: [{ type: String }],
-    likes: {
-      type: Number,
-      default: 0,
+    type: {
+      type: String,
+      required: true,
     },
-    comment: [{ type: String }],
-    availability: { type: Boolean, default: true },
-    description: { type: String },
-    price: { type: Number, required: true },
-    imagesPaths: [{ type: String }],
+    streetAddress: {
+      type: String,
+      required: true,
+    },
+    aptSuite: {
+      type: String,
+      required: true,
+    },
+    city: {
+      type: String,
+      required: true,
+    },
+    province: {
+      type: String,
+      required: true,
+    },
+    country: {
+      type: String,
+      required: true,
+    },
+    guestCount: {
+      type: Number,
+      required: true,
+    },
+    bedroomCount: {
+      type: Number,
+      required: true,
+    },
+    bedCount: {
+      type: Number,
+      required: true,
+    },
+    bathroomCount: {
+      type: Number,
+      required: true,
+    },
+    amenities: {
+      type: Array,
+      default: [],
+    },
+    listingPhotoPaths: [{ type: String }], // Store photos URLs
+    title: {
+      type: String,
+      required: true,
+    },
+    description: {
+      type: String,
+      required: true,
+    },
+    highlight: {
+      type: String,
+      required: true,
+    },
+    highlightDesc: {
+      type: String,
+      required: true,
+    },
+    price: {
+      type: Number,
+      required: true,
+    },
   },
   {
     timestamps: true,
