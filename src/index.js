@@ -4,6 +4,7 @@ const cors = require("cors");
 const { initDB } = require("./config/db");
 const userRouter = require("./routes/user");
 const chaletRouter = require("./routes/chalet");
+const path = require("path");
 
 // Load environment variables
 dotenv.config();
@@ -24,7 +25,8 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(express.json());
-app.use(express.static("public"));
+// Serve static files from the `uploads` folder
+app.use("/uploads", express.static(path.join(__dirname, "public/uploads")));
 
 // Routes
 app.use("/users", userRouter);
