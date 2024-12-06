@@ -18,7 +18,7 @@ router.post(
   ChaletController.createChalet
 );
 router.get("/:id", ChaletController.getChaletById);
-router.get("/search/:search");
+router.get("/search/:search", ChaletController.getChaletsBySearch);
 router.put(
   "/:id",
   authenticate(),
