@@ -3,7 +3,7 @@ const Chalet = require("../models/Chalet");
 class ChaletService {
   static async getChalets(filters) {
     try {
-      const { availability, tags } = filters;
+      const { availability, tags, category } = filters;
 
       // Base query
       let query = {};
@@ -18,8 +18,13 @@ class ChaletService {
         query.tags = { $in: tags }; // MongoDB `$in` operator matches any value in the array
       }
 
+      // Add category filter
+      if (category !== undefined) {
+        query.category = category;
+      }
+
       // Fetch data from the database based on the query
-      const chalets = await Chalet.find(query); // Assuming a Mongoose model
+      const chalets = await Chalet.find(query).populate("creator"); // Assuming a Mongoose model
       return chalets;
     } catch (err) {
       throw err;
@@ -33,6 +38,36 @@ class ChaletService {
       return chalet;
     } catch (err) {
       throw err;
+    }
+  }
+
+  static async getChaletById(id) {
+    try {
+      const chalet = await Chalet.findById(id).populate("creator");
+      return chalet;
+    } catch (err) {
+      throw new Error(`Can't find Chalet with this id ${id}`);
+    }
+  }
+
+  static async getChaletsBySearch(search) {
+    try {
+      let chalets = [];
+
+      if (search === "all") {
+        chalets = await Chalet.find().populate("creator");
+      } else {
+        chalets = await Chalet.find({
+          $or: [
+            { category: { $regex: search, $options: "i" } },
+            { title: { $regex: search, $options: "i" } },
+          ],
+        }).populate("creator");
+      }
+
+      return chalets;
+    } catch (err) {
+      throw new Error("Chalet can not be found with these searchs");
     }
   }
 

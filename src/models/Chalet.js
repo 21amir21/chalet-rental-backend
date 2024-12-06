@@ -3,7 +3,7 @@ const { Schema, model } = require("mongoose");
 const chaletSchema = new Schema(
   {
     creator: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "User",
     },
     category: {
@@ -54,7 +54,7 @@ const chaletSchema = new Schema(
       type: Array,
       default: [],
     },
-    listingPhotoPaths: [{ type: String }], // Store photos URLs
+    chaletPhotoPaths: [{ type: String }], // Store photos URLs
     title: {
       type: String,
       required: true,

@@ -3,7 +3,7 @@ const ChaletService = require("../services/chalet");
 class ChaletController {
   static async getChalets(req, res) {
     try {
-      const { availability, tags } = req.query;
+      const { availability, tags, category } = req.query;
 
       let filters = {};
 
@@ -18,16 +18,23 @@ class ChaletController {
         filters.tags = tagArray; // Store the array for further processing
       }
 
+      if (category) {
+        filters.category = category;
+      }
+
       // Pass filters to the service
       const chalets = await ChaletService.getChalets(filters);
 
       res.status(200).json(chalets);
     } catch (err) {
       console.error(err);
-      res.status(500).json({ error: "Internal server error" });
+      res
+        .status(500)
+        .json({ message: "Internal server error", error: err.message });
     }
   }
 
+  // TODO: might remove this as well
   static async getAvailableChalets(req, res) {
     try {
       const queryParam = req.query.availability;
@@ -36,6 +43,30 @@ class ChaletController {
       res.status(200).json(chalets);
     } catch (err) {
       res.status(500).json({ error: "Internal server error" });
+    }
+  }
+
+  static async getChaletById(req, res) {
+    try {
+      const { id } = req.params;
+      const chalet = await ChaletService.getChaletById(id);
+      res.status(200).json(chalet);
+    } catch (err) {
+      res
+        .status(404)
+        .json({ message: "Chalet can not be found!", error: err.message });
+    }
+  }
+
+  static async getChaletsBySearch(req, res) {
+    try {
+      const { search } = req.params;
+      const chalets = await ChaletService.getChaletsBySearch(search);
+      res.status(200).json(chalets);
+    } catch (err) {
+      res
+        .status(404)
+        .json({ message: "Chalets can not be found!", error: err.message });
     }
   }
 

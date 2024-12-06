@@ -17,6 +17,8 @@ router.post(
   upload.array("listingPhotos"),
   ChaletController.createChalet
 );
+router.get("/:id", ChaletController.getChaletById);
+router.get("/search/:search");
 router.put(
   "/:id",
   authenticate(),
