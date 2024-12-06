@@ -2,9 +2,10 @@ const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const { initDB } = require("./config/db");
+const path = require("path");
 const userRouter = require("./routes/user");
 const chaletRouter = require("./routes/chalet");
-const path = require("path");
+const bookingRouter = require("./routes/booking");
 
 // Load environment variables
 dotenv.config();
@@ -32,6 +33,7 @@ app.use("/uploads", express.static(path.join(__dirname, "public/uploads")));
 // Routes
 app.use("/users", userRouter);
 app.use("/chalets", chaletRouter);
+app.use("/bookings", bookingRouter);
 
 // Start the server
 const PORT = process.env.PORT || 5000;
