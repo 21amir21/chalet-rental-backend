@@ -28,6 +28,10 @@ const userSchema = new Schema(
       type: String,
       default: "",
     },
+    tripList: {
+      type: Array,
+      default: [],
+    },
     wishList: {
       type: Array,
       default: [],
