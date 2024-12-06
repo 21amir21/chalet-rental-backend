@@ -80,9 +80,8 @@ class UserController {
         const token = generateToken(user);
         res.status(200).json({
           message: "Login Successfull!",
-          jwt: token,
-          userId: user._id,
-          userType: user.userType,
+          user: user,
+          token: token,
         });
       } else {
         res.status(401).json({ messsage: "Invalid Credentials" });
