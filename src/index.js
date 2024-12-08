@@ -6,6 +6,7 @@ const path = require("path");
 const userRouter = require("./routes/user");
 const chaletRouter = require("./routes/chalet");
 const bookingRouter = require("./routes/booking");
+const paymentRouter = require("./routes/payment");
 
 // Load environment variables
 dotenv.config();
@@ -34,6 +35,7 @@ app.use("/uploads", express.static(path.join(__dirname, "public/uploads")));
 app.use("/users", userRouter);
 app.use("/chalets", chaletRouter);
 app.use("/bookings", bookingRouter);
+app.use("/payments", paymentRouter);
 
 // Start the server
 const PORT = process.env.PORT || 5000;
