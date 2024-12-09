@@ -11,7 +11,12 @@ router.get("/:id", UserController.getUserById);
 
 // protected route
 router.delete("/:id", authenticate(), UserController.deleteUser);
-router.put("/:id", authenticate(), UserController.updateUser);
+router.put(
+  "/:id",
+  authenticate(),
+  upload.single("profileImage"),
+  UserController.updateUser
+);
 
 // register a new user
 router.post(

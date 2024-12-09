@@ -62,10 +62,15 @@ class UserController {
     try {
       const userId = req.params.id;
       const updatedUser = req.body;
+
+      // the uploaded file is in the req.file
+      if (req.file) {
+        const profileImagePath = req.file.path;
+        updatedUser.profileImagePath = profileImagePath;
+      }
+
       const user = await UserService.updateUser(userId, updatedUser);
-      res.status(200).json({
-        message: `Successfully updated user of id ${user._id}`,
-      });
+      res.status(200).json(user);
     } catch (err) {
       console.error(`Error updating user ${user._id}: ${err}`);
       res.status(500).json({ error: "Internal server error" });

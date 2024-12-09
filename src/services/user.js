@@ -57,9 +57,13 @@ class UserService {
   static async updateUser(userId, updatedUserData) {
     try {
       const user = await User.findByIdAndUpdate(userId, updatedUserData);
+      const hashedPassword = await bcrypt.hash(user.password, 14);
+      user.password = hashedPassword;
+
       if (!user) {
         throw new Error("User not found");
       }
+      user.save();
       return user;
     } catch (err) {
       throw err;

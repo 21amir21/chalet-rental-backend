@@ -24,8 +24,15 @@ initDB()
 // Initialize app
 const app = express();
 
+const corsOptions = {
+  origin: "http://localhost:5173", // Allow your frontend
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Allowed HTTP methods
+  allowedHeaders: ["Content-Type", "Authorization"], // Allowed headers
+  credentials: true, // Allow cookies or credentials if required
+};
+
 // Middleware
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // Serve static files from the `uploads` folder

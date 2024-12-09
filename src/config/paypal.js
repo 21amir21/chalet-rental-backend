@@ -1,4 +1,4 @@
-const axios = require("axios").defaults;
+const axios = require("axios");
 
 const generateAccessToken = async () => {
   const response = await axios({
@@ -56,7 +56,7 @@ module.exports.createOrder = async (chaletTitle, chaletDesc, totalPrice) => {
       // for the buyer (customer)
       application_context: {
         return_url: process.env.FRONTEND_BASE_URL + "/payments/complete", // TODO: hanshof fy el frontend hatb2a ezay
-        cancel_url: process.env.FRONTEND_BASE_URL + "/chalets", // TODO: hanshof fy el frontend hatb2a ezay
+        cancel_url: process.env.FRONTEND_BASE_URL + "/", // TODO: hanshof fy el frontend hatb2a ezay
         shipping_preference: "NO_SHIPPING",
         user_action: "PAY_NOW",
         brand_name: "PAZAS", // TODO: the name of our website
@@ -64,21 +64,30 @@ module.exports.createOrder = async (chaletTitle, chaletDesc, totalPrice) => {
     }),
   });
 
-  // return response.data.links.find((link) => link.rel === "approve").href;
-  return response.data.id;
+  return response.data.links.find((link) => link.rel === "approve").href;
+  // return response.data.id;
 };
 
 module.exports.capturePayment = async (orderId) => {
-  const accessToken = await generateAccessToken();
+  try {
+    const accessToken = await generateAccessToken();
 
-  const response = await axios({
-    url: `${process.env.PAYPAL_BASE_URL}/v2/checkout/orders/${orderId}/capture`,
-    method: "post",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
+    const response = await axios({
+      url: `${process.env.PAYPAL_BASE_URL}/v2/checkout/orders/${orderId}/capture`,
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+        "PayPal-Request-Id": `capture-${orderId}`, // Idempotency key
+      },
+    });
 
-  return response.data;
+    return response.data;
+  } catch (err) {
+    console.error(
+      "Error capturing payment: ",
+      err.response ? err.response.data : err.message
+    );
+    throw err;
+  }
 };
