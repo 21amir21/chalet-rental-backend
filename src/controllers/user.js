@@ -50,7 +50,7 @@ class UserController {
       const userId = req.params.id;
       const user = await UserService.deleteUser(userId);
       res.status(200).json({
-        message: `Successfully deleted user of id ${user._id} and name ${user.name}`,
+        message: `Successfully deleted user of id ${user._id} and name ${user.firstName}`,
       });
     } catch (err) {
       console.error(`Error deleting user: ${err}`);

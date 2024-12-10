@@ -26,6 +26,7 @@ const authenticate = () => {
 
       req.userId = decoded.userId;
       req.userType = decoded.userType;
+      req.token = token;
       next();
     } catch (err) {
       return res.status(401).json({ message: "Not Authorized", error: err });
@@ -67,4 +68,29 @@ const checkOwnership = () => {
   };
 };
 
-module.exports = { authenticate, authorize, checkOwnership };
+const checkUser = () => {
+  return async (req, res, next) => {
+    try {
+      // Extract the token from the Authorization header
+      const userToken = req.headers.authorization.split(" ")[1];
+      const decodedToken = verifyToken(userToken); // Decode the token
+
+      // Extract user ID from the token
+      const userIdFromToken = decodedToken.userId;
+
+      // Compare with the user ID in the request parameters
+      if (userIdFromToken !== req.params.id) {
+        return res.status(403).json({
+          error: "Forbidden: You are not authorized to perform this action.",
+        });
+      }
+
+      next(); // Proceed to the next middleware or route handler
+    } catch (err) {
+      console.error(`Error in checkUser middleware: ${err.message}`);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  };
+};
+
+module.exports = { authenticate, authorize, checkOwnership, checkUser };
