@@ -30,23 +30,23 @@ module.exports.createOrder = async (chaletTitle, chaletDesc, totalPrice) => {
         {
           items: [
             {
-              name: chaletTitle, // TODO: should make it the chalet name or label or whatever
-              description: chaletDesc, // TODO: should make it the chalet desc or label or whatever
+              name: chaletTitle,
+              description: chaletDesc,
               quantity: 1,
               unit_amount: {
                 currency_code: "USD",
-                value: totalPrice.toString(), // // TODO: should make it the price
+                value: totalPrice.toString(),
               },
             },
           ],
 
           amount: {
             currency_code: "USD",
-            value: totalPrice.toString(), // TODO: should make it the chalet desc or label or whatever
+            value: totalPrice.toString(),
             breakdown: {
               item_total: {
                 currency_code: "USD",
-                value: totalPrice.toString(), // TODO: should make it the chalet desc or label or whatever
+                value: totalPrice.toString(),
               },
             },
           },
@@ -55,17 +55,16 @@ module.exports.createOrder = async (chaletTitle, chaletDesc, totalPrice) => {
 
       // for the buyer (customer)
       application_context: {
-        return_url: process.env.FRONTEND_BASE_URL + "/payments/complete", // TODO: hanshof fy el frontend hatb2a ezay
-        cancel_url: process.env.FRONTEND_BASE_URL + "/", // TODO: hanshof fy el frontend hatb2a ezay
+        return_url: process.env.FRONTEND_BASE_URL + "/payments/complete",
+        cancel_url: process.env.FRONTEND_BASE_URL + "/",
         shipping_preference: "NO_SHIPPING",
         user_action: "PAY_NOW",
-        brand_name: "PAZAS", // TODO: the name of our website
+        brand_name: "PAZAS",
       },
     }),
   });
 
   return response.data.links.find((link) => link.rel === "approve").href;
-  // return response.data.id;
 };
 
 module.exports.capturePayment = async (orderId) => {
