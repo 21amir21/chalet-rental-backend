@@ -1,11 +1,6 @@
 const { Router } = require("express");
 const UserController = require("../controllers/user");
-const {
-  authenticate,
-  authorize,
-  checkOwnership,
-  checkUser,
-} = require("../middlewares/auth");
+const { authenticate, authorize, checkUser } = require("../middlewares/auth");
 const upload = require("../utils/uploads");
 
 const router = Router();
