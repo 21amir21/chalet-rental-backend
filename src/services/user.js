@@ -56,14 +56,27 @@ class UserService {
 
   static async updateUser(userId, updatedUserData) {
     try {
-      const user = await User.findByIdAndUpdate(userId, updatedUserData);
-      const hashedPassword = await bcrypt.hash(user.password, 14);
-      user.password = hashedPassword;
+      // const user = await User.findByIdAndUpdate(userId, updatedUserData);
+      // const hashedPassword = await bcrypt.hash(user.password, 14);
+      // user.password = hashedPassword;
 
-      if (!user) {
-        throw new Error("User not found");
+      // if (!user) {
+      //   throw new Error("User not found");
+      // }
+      // await user.save();
+      // return user;
+      const user = await User.findById(userId);
+      if (!user) throw new Error("User not found");
+
+      if (updatedUserData.password) {
+        updatedUserData.password = await bcrypt.hash(
+          updatedUserData.password,
+          14
+        );
       }
-      user.save();
+
+      Object.assign(user, updatedUserData);
+      await user.save();
       return user;
     } catch (err) {
       throw err;
