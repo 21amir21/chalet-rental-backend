@@ -5,6 +5,7 @@ class PaymentController {
   static async makePayment(req, res) {
     try {
       const { chaletTitle, chaletDesc, totalPrice } = req.body;
+      console.log({ chaletTitle, chaletDesc, totalPrice });
       const approvalUrl = await createOrder(
         chaletTitle,
         chaletDesc,

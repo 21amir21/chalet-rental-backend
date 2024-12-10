@@ -1,4 +1,5 @@
 const ChaletService = require("../services/chalet");
+const User = require("../models/User");
 
 class ChaletController {
   static async getChalets(req, res) {
@@ -83,6 +84,15 @@ class ChaletController {
       chaletData.chaletPhotoPaths = chaletPhotoPaths;
 
       const chalet = await ChaletService.postChalet(chaletData);
+
+      if (req.userType !== "owner") {
+        req.userType = "owner";
+        const user = await User.findById(req.userId);
+        user.userType = "owner";
+
+        await user.save();
+      }
+
       res.status(201).json({
         message: "Chalet was created successfully!", // TODO: do i need to return the chalet in the response ?
       });
@@ -115,7 +125,7 @@ class ChaletController {
       });
     } catch (err) {
       console.error(`Error deleting chalet: ${err}`);
-      res.status(500).json({ error: "Internal server error" });
+      res.status(500).json({ error: "Internal server error ya amir" });
     }
   }
 

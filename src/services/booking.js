@@ -71,6 +71,18 @@ class BookingService {
       throw new Error("could fetch owner reservations", err.message);
     }
   }
+
+  static async deleteBooking(bookingId) {
+    try {
+      const booking = await Booking.findByIdAndDelete(bookingId);
+      if (!booking) {
+        throw new Error("Chalet not found");
+      }
+      return booking;
+    } catch (err) {
+      throw err;
+    }
+  }
 }
 
 module.exports = BookingService;

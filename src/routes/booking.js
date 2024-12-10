@@ -13,4 +13,6 @@ router.get("/:userId/properties", BookingController.getOwnerProperties);
 
 router.get("/:userId/reservations", BookingController.getUserReservations);
 
+router.delete("/:bookingId", BookingController.deleteBooking);
+
 module.exports = router;

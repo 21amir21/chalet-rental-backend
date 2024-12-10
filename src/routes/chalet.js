@@ -13,7 +13,7 @@ router.get("/", ChaletController.getChalets);
 router.post(
   "/",
   authenticate(),
-  authorize(["owner"]),
+  authorize(["owner", "customer"]),
   upload.array("listingPhotos"),
   ChaletController.createChalet
 );
@@ -30,7 +30,6 @@ router.delete(
   "/:id",
   authenticate(),
   authorize(["owner", "admin"]),
-  checkOwnership(),
   ChaletController.deleteChalet
 );
 

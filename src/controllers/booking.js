@@ -61,6 +61,19 @@ class BookingController {
         .json({ message: "Can not find reservations!", error: err.message });
     }
   }
+
+  static async deleteBooking(req, res) {
+    try {
+      const bookingId = req.params.bookingId;
+      const booking = await BookingService.deleteBooking(bookingId);
+      res.status(200).json({
+        message: `Successfully deleted booking of id ${bookingId}`,
+      });
+    } catch (err) {
+      console.error(`Error deleting booking: ${err}`);
+      res.status(500).json({ error: "Internal server error in booking" });
+    }
+  }
 }
 
 module.exports = BookingController;
