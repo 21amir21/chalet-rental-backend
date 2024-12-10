@@ -13,7 +13,7 @@ router.get("/:id", UserController.getUserById);
 router.delete(
   "/:id",
   authenticate(),
-  authorize["admin"],
+  authorize(["admin"]),
   UserController.deleteUser
 );
 router.put(
