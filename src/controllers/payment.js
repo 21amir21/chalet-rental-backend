@@ -1,5 +1,4 @@
 const { createOrder, capturePayment } = require("../config/paypal");
-const PaymentService = require("../services/payment");
 
 class PaymentController {
   static async makePayment(req, res) {
