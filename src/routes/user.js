@@ -1,16 +1,21 @@
 const { Router } = require("express");
 const UserController = require("../controllers/user");
-const { authenticate } = require("../middlewares/auth");
+const { authenticate, authorize } = require("../middlewares/auth");
 const upload = require("../utils/uploads");
 
 const router = Router();
 
 // simple example
-router.get("/", UserController.getUsers);
+router.get("/", authenticate(), authorize(["admin"]), UserController.getUsers);
 router.get("/:id", UserController.getUserById);
 
 // protected route
-router.delete("/:id", authenticate(), UserController.deleteUser);
+router.delete(
+  "/:id",
+  authenticate(),
+  authorize["admin"],
+  UserController.deleteUser
+);
 router.put(
   "/:id",
   authenticate(),
